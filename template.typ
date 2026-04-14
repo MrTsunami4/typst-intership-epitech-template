@@ -15,6 +15,7 @@
   let brand-color = rgb("#013afb")
   let bg-light = rgb("#f4f6fd")
   let font-sans = "Noto Sans"
+  let font-serif = "Libertinus Serif"
   let margin-side = 2.5cm
   let margin-v = 3.5cm
   let page-width = 21cm
@@ -109,7 +110,7 @@
 
   // --- Main Typography & Styling ---
   // Using a clean, readable font configuration (adjust to your liking)
-  set text(font: "Libertinus Serif", size: 11pt, lang: "fr", fill: black)
+  set text(font: font-serif, size: 11pt, lang: "fr", fill: black)
   set par(justify: true, leading: 0.65em)
   set heading(numbering: "1.1.")
 
