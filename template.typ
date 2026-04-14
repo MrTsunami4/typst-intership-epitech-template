@@ -11,13 +11,21 @@
   acknowledgements: none,
   body,
 ) = {
+  // Variables
+  let brand-color = rgb("#013afb")
+  let bg-light = rgb("#f4f6fd")
+  let font-sans = "Noto Sans"
+  let margin-side = 2.5cm
+  let margin-v = 3.5cm
+  let page-width = 21cm
+
   // --- Document Metadata ---
   set document(title: title, author: author)
 
   // --- Title Page Setup ---
   // We use an empty page setup first so the cover page doesn't get headers/footers
-  set page(paper: "a4", margin: 2.5cm, fill: rgb("#013afb"))
-  set text(fill: white, font: "Noto Sans", weight: "medium")
+  set page(paper: "a4", margin: margin-side, fill: brand-color)
+  set text(fill: white, font: font-sans, weight: "medium")
 
   // Logos at the top
   grid(
@@ -45,7 +53,7 @@
 
   // Supervisors block pushed to the bottom
   align(left)[
-    #text(size: 12pt, weight: "bold")[Maître de stage/ Tuteurs :] \
+    #text(size: 12pt, weight: "bold")[Maître de stage / Tuteurs :] \
     #v(2mm)
     #for sup in supervisors [
       - #sup \
@@ -58,15 +66,15 @@
   // Now we apply your specific header and footer rules to the rest of the pages
   set page(
     fill: none, // Resets the blue background
-    margin: (top: 3.5cm, bottom: 3.5cm, left: 2.5cm, right: 2.5cm),
+    margin: (top: margin-v, bottom: margin-v, left: margin-side, right: margin-side),
     header: context {
-      set text(size: 10pt, fill: white, font: "Noto Sans", weight: "medium")
+      set text(size: 10pt, fill: white, font: font-sans, weight: "medium")
       // Bleed the background to the top and side edges of the A4 page
-      place(dx: -2.5cm, dy: 0cm, block(
-        fill: rgb("#013afb"),
-        width: 21cm,
-        height: 3.5cm,
-        inset: (left: 2.5cm, right: 2.5cm, bottom: 5mm),
+      place(dx: -margin-side, dy: 0cm, block(
+        fill: brand-color,
+        width: page-width,
+        height: margin-v,
+        inset: (left: margin-side, right: margin-side, bottom: 5mm),
         align(bottom)[
           #grid(
             columns: (1fr, auto),
@@ -79,13 +87,13 @@
       ))
     },
     footer: context {
-      set text(size: 12pt, fill: white, font: "Noto Sans", weight: "medium")
+      set text(size: 12pt, fill: white, font: font-sans, weight: "medium")
       // Bleed the background to the bottom and side edges of the A4 page
-      place(dx: -2.5cm, dy: 0cm, block(
-        fill: rgb("#013afb"),
-        width: 21cm,
-        height: 3.5cm,
-        inset: (left: 2.5cm, right: 2.5cm, top: 5mm),
+      place(dx: -margin-side, dy: 0cm, block(
+        fill: brand-color,
+        width: page-width,
+        height: margin-v,
+        inset: (left: margin-side, right: margin-side, top: 5mm),
         align(top)[
           #grid(
             columns: (auto, 1fr, auto),
@@ -107,7 +115,7 @@
 
   // Add spacing around headings
   show heading: it => {
-    set text(font: "Noto Sans", fill: rgb("#013afb"))
+    set text(font: font-sans, fill: brand-color)
     v(1.5em)
     it
     v(0.5em)
@@ -115,10 +123,10 @@
 
   // --- Code Block Styling ---
   show raw.where(block: true): it => block(
-    fill: rgb("#f4f6fd"), // Very light blue background
+    fill: bg-light, // Very light blue background
     inset: 10pt,
     radius: (left: 0pt, right: 4pt),
-    stroke: (left: 3pt + rgb("#013afb")), // Brand blue left border
+    stroke: (left: 3pt + brand-color), // Brand blue left border
     width: 100%,
     it,
   )
@@ -126,9 +134,9 @@
   // --- Table & Figure Styling ---
   set table(
     stroke: 0.5pt + rgb("#d1d5db"), // Light gray borders
-    fill: (x, y) => if y == 0 { rgb("#013afb") } else if calc.even(y) { rgb("#f4f6fd") } else { none },
+    fill: (x, y) => if y == 0 { brand-color } else if calc.even(y) { bg-light } else { none },
   )
-  show table.cell.where(y: 0): set text(fill: white, weight: "bold", font: "Noto Sans")
+  show table.cell.where(y: 0): set text(fill: white, weight: "bold", font: font-sans)
 
   // --- Figure & Caption Styling ---
   // Tweak caption text generally
@@ -142,8 +150,8 @@
     align(center, {
       // Create the thematic box around the image itself
       box(
-        stroke: (left: 3pt + rgb("#013afb")), // Signature left border
-        fill: rgb("#f4f6fd"), // Very light blue tint background
+        stroke: (left: 3pt + brand-color), // Signature left border
+        fill: bg-light, // Very light blue tint background
         inset: 12pt, // Space between border and image edge
         radius: (right: 4pt), // Soft corners
         width: 90%, // Slight inset from main text width
