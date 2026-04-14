@@ -60,24 +60,48 @@ def preprocess_sensor_data(df, window_size=50):
     return df.rolling(window=window_size).mean()
 ```
 
-= Résultats et Évaluation
-== Comparaison des Performances
-Après l'entraînement des modèles sur le cluster de l'entreprise, nous avons comparé notre nouvelle approche (Modèle Hybride LSTM) avec l'ancien système de règles statiques.
+= Méthodologie et Architecture
+== Schéma du Réseau de Neurones
+Pour relever le défi des prédictions en temps réel, nous avons implémenté une architecture spécifique. Le diagramme ci-dessous illustre le flux de données entrant dans le modèle LSTM hybride.
+
+#figure(
+  // If you have a real image file, use:
+  // image("data-flow-diagram.png", width: 80%)
+
+  // Here is a stylistic placeholder so this code compiles immediately.
+  // When you insert a real image(), it will get the identical look.
+  block(
+    width: 100%,
+    height: 6cm,
+    fill: rgb("#e2e8f0"),
+    radius: 2pt,
+    align(center + horizon)[
+      #set text(fill: rgb("#555"), font: "Noto Sans")
+      *DIAGRAMME PLACEHOLDER* \
+      Remplacez ce bloc rect(dy: ...) par : \
+      #raw("image(\"chemin/vers/image.png\")", lang: "typ")
+    ],
+  ),
+  caption: [Diagramme d'architecture du réseau LSTM hybride développé pour l'analyse des séries temporelles.],
+)
+
+= Analyse des Résultats
+== Métriques de Performance
 
 #figure(
   table(
-    columns: (2fr, 1fr, 1fr, 1fr),
-    align: (left, center, center, center),
-    [Modèle Utilisé], [Précision], [Rappel (Recall)], [F1-Score],
-    [Système Héritage (Règles)], [78.2%], [81.5%], [79.8%],
-    [Régression Logistique], [82.4%], [84.1%], [83.2%],
-    [Forêt Aléatoire (Baseline)], [89.1%], [87.3%], [88.2%],
-    [Modèle Hybride LSTM (Nouveau)], [94.5%], [92.8%], [93.6%],
+    columns: (2fr, 1fr, 1fr),
+    align: (left, center, center),
+    [Approche], [Précision], [Gains vs. Baseline],
+    [Règles Statiques], [78.2%], [0%],
+    [Forêt Aléatoire], [89.1%], [+10.9 pts],
+    [Notre Modèle], [94.5%], [+16.3 pts],
   ),
-  caption: [Comparaison des métriques de performance sur l'ensemble de test (Juin 2026)],
+  caption: [Synthèse des métriques de performance sur l'ensemble de test.],
+  kind: table, // This is important to tell Typst this is a table figure
 )
 
-Comme le montre le tableau ci-dessus, le modèle hybride surpasse largement le système héritage, justifiant ainsi son déploiement en production.
+Comme illustré par les résultats tabulaires, l'optimisation a dépassé nos objectifs initiaux.
 
 = Conclusion
 Ce stage m'a permis d'appliquer des concepts théoriques de Machine Learning à des problématiques industrielles critiques. Les résultats obtenus ouvrent la voie à une généralisation de cette approche à d'autres sous-systèmes de l'appareil.

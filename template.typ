@@ -60,7 +60,7 @@
     fill: none, // Resets the blue background
     margin: (top: 3.5cm, bottom: 3.5cm, left: 2.5cm, right: 2.5cm),
     header: context {
-      set text(size: 12pt, fill: white, font: "Noto Sans", weight: "medium")
+      set text(size: 10pt, fill: white, font: "Noto Sans", weight: "medium")
       // Bleed the background to the top and side edges of the A4 page
       place(dx: -2.5cm, dy: 0cm, block(
         fill: rgb("#013afb"),
@@ -129,7 +129,32 @@
     fill: (x, y) => if y == 0 { rgb("#013afb") } else if calc.even(y) { rgb("#f4f6fd") } else { none },
   )
   show table.cell.where(y: 0): set text(fill: white, weight: "bold", font: "Noto Sans")
+
+  // --- Figure & Caption Styling ---
+  // Tweak caption text generally
   show figure.caption: set text(size: 9pt, style: "italic", fill: rgb("#555555"))
+
+  // Style the content area of figures specifically for images/diagrams
+  // so they match the code block aesthetic.
+  show figure.where(kind: image): it => {
+    // Center the whole figure block and add vertical spacing
+    v(1em, weak: true)
+    align(center, {
+      // Create the thematic box around the image itself
+      box(
+        stroke: (left: 3pt + rgb("#013afb")), // Signature left border
+        fill: rgb("#f4f6fd"), // Very light blue tint background
+        inset: 12pt, // Space between border and image edge
+        radius: (right: 4pt), // Soft corners
+        width: 90%, // Slight inset from main text width
+        it.body,
+      )
+      // Space between image box and caption
+      v(0.6em, weak: true)
+      it.caption
+    })
+    v(1em, weak: true)
+  }
 
   // --- Frontmatter (Acknowledgements, Abstract, TOC) ---
   if acknowledgements != none {
