@@ -1,12 +1,13 @@
-#import "template.typ": internship_report
+#import "template.typ": internship_report, part_page
 
 // Set up your report details here
 #show: internship_report.with(
-  title: "Optimisation des Algorithmes de Maintenance Prédictive",
+  title: "Optimizing Predictive Maintenance Algorithms",
   author: "Jane Doe",
+  email: "jane.doe@epitech.eu",
 
   // University info
-  university_name: "Université d'Occitanie",
+  university_name: "Epitech",
   // university_logo: "uni-logo.png",
 
   // Company info
@@ -14,34 +15,39 @@
   // company_logo: "company-logo.png",
 
   // Internship details
-  dates: "Janvier 2026 - Juillet 2026",
+  dates: "January 2026 - July 2026",
   supervisors: (
-    "Dr. Alan Turing (Tuteur Universitaire)",
-    "Sarah Connor (Maître de stage)",
+    "Dr. Alan Turing (Academic Supervisor)",
+    "Sarah Connor (Company Mentor)",
   ),
 
   // Frontmatter sections
   acknowledgements: [
-    Je tiens à remercier chaleureusement mes tuteurs pour leurs conseils avisés, ainsi que toute l'équipe d'ingénierie d'AeroTech pour m'avoir intégré de manière si bienveillante durant ces six mois.
+    I would like to warmly thank my mentors for their valuable advice, as well as the entire engineering team at AeroTech for integrating me so kindly during these six months.
   ],
 
   abstract: [
-    Ce rapport détaille un stage de six mois chez AeroTech Industries, axé sur l'optimisation des algorithmes de maintenance prédictive pour les avions commerciaux. En implémentant de nouvelles techniques d'apprentissage automatique (Machine Learning), les fausses alertes ont été réduites de 14%. Ce document couvre le contexte théorique, la méthodologie employée, ainsi que les résultats de la phase de test A/B.
+    This report details a six-month internship at AeroTech Industries, focusing on the optimization of predictive maintenance algorithms for commercial aircraft. By implementing new Machine Learning techniques, false alerts were reduced by 14%. This document covers the technical context, the methodology used, and the results of the A/B testing phase.
   ],
 )
 
 // ==========================================
-// YOUR REPORT STARTS HERE
+// PART 1: Technical Handover
 // ==========================================
 
-= Introduction
-L'industrie aérospatiale génère des téraoctets de données de télémétrie par vol. L'enjeu principal de ce stage était d'exploiter ces données pour prédire les pannes matérielles avant qu'elles ne surviennent, réduisant ainsi les temps d'immobilisation au sol.
+#part_page(
+  "Part 1: Technical Handover",
+  preamble: "This section is intended for a newcomer taking over the project. It describes the company context, the project's general architecture, and the work organization."
+)
 
-= Contexte Technique
-== Modèle de Détection d'Anomalies
-Pour traiter les séries temporelles provenant des capteurs des moteurs, nous avons opté pour une architecture basée sur des forêts aléatoires (Random Forest) combinée à un réseau de neurones récurrent (LSTM).
+= Company Context
+AeroTech Industries is a leader in aerospace engineering. The team I joined is responsible for the digital twin platform used to monitor aircraft health in real-time.
 
-Voici un extrait du script de prétraitement utilisé pour nettoyer le signal des capteurs de température :
+= Project Architecture
+The project follows a microservices architecture. Data is ingested via MQTT, processed by a Spark cluster, and stored in a time-series database.
+
+== Anomaly Detection Model
+To process time-series data from engine sensors, we opted for an architecture based on Random Forests combined with a Long Short-Term Memory (LSTM) network.
 
 ```python
 import pandas as pd
@@ -49,59 +55,91 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 def preprocess_sensor_data(df, window_size=50):
-    # Suppression des valeurs aberrantes extrêmes
+    # Remove extreme outliers
     df = df[(np.abs(df.temperature - df.temperature.mean()) <= (3 * df.temperature.std()))]
 
-    # Normalisation des données
+    # Normalize data
     scaler = StandardScaler()
     df['temp_scaled'] = scaler.fit_transform(df[['temperature']])
 
-    # Création des fenêtres glissantes pour le LSTM
+    # Create sliding windows for LSTM
     return df.rolling(window=window_size).mean()
 ```
 
-= Méthodologie et Architecture
-== Schéma du Réseau de Neurones
-Pour relever le défi des prédictions en temps réel, nous avons implémenté une architecture spécifique. Le diagramme ci-dessous illustre le flux de données entrant dans le modèle LSTM hybride.
+= Methodology and Implementation
+== Data Flow Diagram
+The diagram below illustrates the data flow into the hybrid LSTM model.
 
 #figure(
-  // If you have a real image file, use:
-  // image("data-flow-diagram.png", width: 80%)
-
-  // Here is a stylistic placeholder so this code compiles immediately.
-  // When you insert a real image(), it will get the identical look.
   block(
     width: 100%,
     height: 6cm,
     fill: rgb("#e2e8f0"),
     radius: 2pt,
     align(center + horizon)[
-      #set text(fill: rgb("#555"), font: "Noto Sans")
-      *DIAGRAMME PLACEHOLDER* \
-      Remplacez ce bloc rect(dy: ...) par : \
-      #raw("image(\"chemin/vers/image.png\")", lang: "typ")
+      #set text(fill: rgb("#555"), font: "Segoe UI")
+      *ARCHITECTURE DIAGRAM PLACEHOLDER* \
+      Replace this block with: \
+      #raw("image(\"path/to/image.png\")", lang: "typ")
     ],
   ),
-  caption: [Diagramme d'architecture du réseau LSTM hybride développé pour l'analyse des séries temporelles.],
+  caption: [Architecture diagram of the hybrid LSTM network developed for time-series analysis.],
 )
 
-= Analyse des Résultats
-== Métriques de Performance
+= Results Analysis
+== Performance Metrics
 
 #figure(
   table(
     columns: (2fr, 1fr, 1fr),
     align: (left, center, center),
-    [Approche], [Précision], [Gains vs. Baseline],
-    [Règles Statiques], [78.2%], [0%],
-    [Forêt Aléatoire], [89.1%], [+10.9 pts],
-    [Notre Modèle], [94.5%], [+16.3 pts],
+    [Approach], [Accuracy], [Gains vs. Baseline],
+    [Static Rules], [78.2%], [0%],
+    [Random Forest], [89.1%], [+10.9 pts],
+    [Our Model], [94.5%], [+16.3 pts],
   ),
-  caption: [Synthèse des métriques de performance sur l'ensemble de test.],
-  kind: table, // This is important to tell Typst this is a table figure
+  caption: [Summary of performance metrics on the test set.],
+  kind: table,
 )
 
-Comme illustré par les résultats tabulaires, l'optimisation a dépassé nos objectifs initiaux.
+// ==========================================
+// PART 2: Self-Assessment
+// ==========================================
+
+#part_page(
+  "Part 2: Self-Assessment",
+  preamble: "This section presents an argument to my supervisor regarding my performance, highlighting my strengths and areas for improvement."
+)
+
+= Strengths
+- *Technical Adaptability:* I was able to quickly master the complex Spark infrastructure used at AeroTech.
+- *Problem Solving:* I successfully identified a bottleneck in the data ingestion pipeline that was causing 5% data loss.
+
+= Areas for Improvement
+- *Communication:* I need to improve my ability to explain technical concepts to non-technical stakeholders.
+- *Time Management:* During the first month, I struggled with prioritizing tasks, though this improved significantly later.
+
+// ==========================================
+// PART 3: Dream Project Pitch
+// ==========================================
+
+#part_page(
+  "Part 3: Dream Project Pitch",
+  preamble: "This section is designed to convince senior management to entrust me with a high-impact project."
+)
+
+= Context
+With the rise of autonomous flight systems, there is a growing need for edge-computing anomaly detection.
+
+= The Project: "EdgeGuard"
+I propose developing a lightweight version of our LSTM model that can run directly on the aircraft's hardware (Edge AI), reducing latency and satellite bandwidth costs.
+
+= Interest for the Company
+Implementing EdgeGuard would reduce operational costs by 20% and provide real-time safety critical alerts without relying on ground connectivity.
+
+// ==========================================
+// CONCLUSION
+// ==========================================
 
 = Conclusion
-Ce stage m'a permis d'appliquer des concepts théoriques de Machine Learning à des problématiques industrielles critiques. Les résultats obtenus ouvrent la voie à une généralisation de cette approche à d'autres sous-systèmes de l'appareil.
+This internship allowed me to apply theoretical Machine Learning concepts to critical industrial problems. The results obtained pave the way for a generalization of this approach to other aircraft sub-systems.
