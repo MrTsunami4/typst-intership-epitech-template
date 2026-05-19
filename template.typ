@@ -127,7 +127,7 @@
 
   // --- Main Typography & Styling ---
   set text(font: font-serif, size: 11pt, lang: "en", fill: black)
-  set par(justify: true, leading: 0.65em)
+  set par(justify: true, leading: 0.35em, first-line-indent: 1.5em)
   set heading(numbering: "1.1.")
 
   show heading: it => {
