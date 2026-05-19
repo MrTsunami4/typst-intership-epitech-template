@@ -3,7 +3,7 @@
     fill: rgb("#013afb"),
     margin: 2.5cm,
   )[
-    #set text(fill: white, font: "Segoe UI")
+    #set text(fill: white, font: "Noto Sans")
     #v(1fr)
     #align(center)[
       #text(size: 32pt, weight: "bold", title)
@@ -33,7 +33,7 @@
   // Variables
   let brand-color = rgb("#013afb")
   let bg-light = rgb("#f4f6fd")
-  let font-sans = "Segoe UI"
+  let font-sans = "Noto Sans"
   let font-serif = "Libertinus Serif"
   let margin-side = 2.5cm
   let margin-v = 3.5cm
@@ -61,11 +61,11 @@
 
   // Title and Author
   align(center)[
-    #text(size: 26pt, weight: "bold", title)
+    #text(size: 30pt, weight: "bold", title)
     #v(1cm)
-    #text(size: 18pt, author)
+    #text(size: 24pt, author)
     #v(0.2cm)
-    #text(size: 12pt, email)
+    #text(size: 18pt, email)
     #v(0.5cm)
     #text(size: 12pt, style: "italic", dates)
   ]
@@ -116,7 +116,7 @@
           #grid(
             columns: (auto, 1fr, auto),
             align(left + horizon)[
-              #university_name
+              #if university_logo != none { image(university_logo, height: 0.8cm) } else { text(university_name) }
             ],
             align(right + horizon)[Page #counter(page).display("1")],
           )
