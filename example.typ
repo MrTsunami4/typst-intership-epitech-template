@@ -37,7 +37,7 @@
 
 #part_page(
   "Part 1: Technical Handover",
-  preamble: "This section is intended for a newcomer taking over the project. It describes the company context, the project's general architecture, and the work organization."
+  preamble: "This section is intended for a newcomer taking over the project. It describes the company context, the project's general architecture, and the work organization.",
 )
 
 = Company Context
@@ -66,6 +66,13 @@ def preprocess_sensor_data(df, window_size=50):
     return df.rolling(window=window_size).mean()
 ```
 
+== Key Terms
+
+/ LSTM: Long Short-Term Memory — a recurrent neural network architecture well-suited for time-series forecasting.
+/ MQTT: Message Queuing Telemetry Transport — a lightweight publish-subscribe messaging protocol for IoT devices.
+/ ROC AUC: Receiver Operating Characteristic — Area Under Curve, a metric evaluating classifier performance across thresholds.
+/ Digital Twin: A virtual replica of a physical system used for real-time monitoring and simulation.
+
 = Methodology and Implementation
 == Data Flow Diagram
 The diagram below illustrates the data flow into the hybrid LSTM model.
@@ -77,7 +84,7 @@ The diagram below illustrates the data flow into the hybrid LSTM model.
     fill: rgb("#e2e8f0"),
     radius: 2pt,
     align(center + horizon)[
-      #set text(fill: rgb("#555"), font: "Segoe UI")
+      #set text(fill: rgb("#555"), font: "Noto Sans")
       *ARCHITECTURE DIAGRAM PLACEHOLDER* \
       Replace this block with: \
       #raw("image(\"path/to/image.png\")", lang: "typ")
@@ -108,7 +115,7 @@ The diagram below illustrates the data flow into the hybrid LSTM model.
 
 #part_page(
   "Part 2: Self-Assessment",
-  preamble: "This section presents an argument to my supervisor regarding my performance, highlighting my strengths and areas for improvement."
+  preamble: "This section presents an argument to my supervisor regarding my performance, highlighting my strengths and areas for improvement.",
 )
 
 = Strengths
@@ -125,7 +132,7 @@ The diagram below illustrates the data flow into the hybrid LSTM model.
 
 #part_page(
   "Part 3: Dream Project Pitch",
-  preamble: "This section is designed to convince senior management to entrust me with a high-impact project."
+  preamble: "This section is designed to convince senior management to entrust me with a high-impact project.",
 )
 
 = Context

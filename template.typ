@@ -152,6 +152,17 @@
   )
   show table.cell.where(y: 0): set text(fill: white, weight: "bold", font: font-sans)
 
+  show terms: set text(font: font-sans, size: 10pt)
+
+  show outline.entry: it => link(
+    it.element.location(),
+    it.indented(it.prefix(), {
+      it.body()
+      h(1fr)
+      it.page()
+    }),
+  )
+
   show figure.caption: set text(size: 9pt, style: "italic", fill: rgb("#555555"))
 
   show figure.where(kind: image): it => {
@@ -185,7 +196,7 @@
   }
 
   heading(numbering: none)[Table of Contents]
-  outline(title: none, indent: auto)
+  outline(title: none, indent: 2em)
   pagebreak()
 
   body
