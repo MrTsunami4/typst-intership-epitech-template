@@ -3,7 +3,7 @@
     fill: rgb("#013afb"),
     margin: 2.5cm,
   )[
-    #set text(fill: white, font: "Noto Sans")
+    #set text(fill: white, font: "DejaVu Sans Mono")
     #v(1fr)
     #align(center)[
       #text(size: 32pt, weight: "bold", title)
@@ -33,7 +33,7 @@
   // Variables
   let brand-color = rgb("#013afb")
   let bg-light = rgb("#f4f6fd")
-  let font-sans = "Noto Sans"
+  let font-sans = "DejaVu Sans Mono"
   let font-serif = "Libertinus Serif"
   let margin-side = 2.5cm
   let margin-v = 3.5cm
