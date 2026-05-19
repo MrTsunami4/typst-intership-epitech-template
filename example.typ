@@ -84,7 +84,7 @@ The diagram below illustrates the data flow into the hybrid LSTM model.
     fill: rgb("#e2e8f0"),
     radius: 2pt,
     align(center + horizon)[
-      #set text(fill: rgb("#555"), font: "Noto Sans")
+      #set text(fill: rgb("#555"), font: "DejaVu Sans")
       *ARCHITECTURE DIAGRAM PLACEHOLDER* \
       Replace this block with: \
       #raw("image(\"path/to/image.png\")", lang: "typ")

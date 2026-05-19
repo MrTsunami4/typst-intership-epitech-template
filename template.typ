@@ -1,12 +1,13 @@
 #let part_page(title, preamble: none) = {
   page(
-    fill: rgb("#013afb"),
     margin: 2.5cm,
   )[
-    #set text(fill: white, font: "DejaVu Sans Mono")
+    #set text(font: "DejaVu Sans")
     #v(1fr)
     #align(center)[
-      #text(size: 32pt, weight: "bold", title)
+      #text(size: 32pt, weight: "bold", fill: rgb("#013afb"), title)
+      #v(0.5cm)
+      #line(length: 20%, stroke: 2pt + rgb("#013afb"))
       #if preamble != none {
         v(1cm)
         text(size: 14pt, preamble)
@@ -32,21 +33,27 @@
 ) = {
   // Variables
   let brand-color = rgb("#013afb")
+  let brand-color-light = brand-color.lighten(95%)
   let bg-light = rgb("#f4f6fd")
-  let font-sans = "DejaVu Sans Mono"
+  let font-sans = "DejaVu Sans"
   let font-serif = "Libertinus Serif"
   let margin-side = 2.5cm
-  let margin-v = 3.5cm
+  let margin-v = 2.5cm
   let page-width = 21cm
 
   // --- Document Metadata ---
   set document(title: title, author: author)
 
   // --- Title Page Setup ---
-  set page(paper: "a4", margin: margin-side, fill: brand-color)
-  set text(fill: white, font: font-sans, weight: "medium")
+  set page(paper: "a4", margin: (top: 3cm, bottom: 3cm, left: margin-side, right: margin-side), fill: none)
+  
+  // Background styling for a "bolder" look
+  place(top + left, block(fill: brand-color, width: 100%, height: 40%, outset: (x: margin-side, y: 3cm)))
 
-  // Logos at the top
+  set text(font: font-sans, weight: "medium")
+
+  // Logos at the top (on blue background)
+  set text(fill: white)
   grid(
     columns: (1fr, 1fr),
     align(left)[
@@ -57,27 +64,34 @@
     ],
   )
 
-  v(4cm)
-
-  // Title and Author
+  v(1.5cm)
+  
+  // Title on the blue background
   align(center)[
-    #text(size: 30pt, weight: "bold", title)
-    #v(1cm)
-    #text(size: 24pt, author)
+    #text(size: 36pt, weight: "bold", title)
+  ]
+
+  v(4.5cm)
+
+  // Author and Details (on white background)
+  set text(fill: black)
+  align(center)[
+    #text(size: 24pt, weight: "semibold", author)
     #v(0.2cm)
-    #text(size: 18pt, email)
-    #v(0.5cm)
-    #text(size: 12pt, style: "italic", dates)
+    #text(size: 16pt, email)
+    #v(0.8cm)
+    #text(size: 14pt, style: "italic", fill: rgb("#444444"), dates)
   ]
 
   v(1fr)
 
   // Supervisors block pushed to the bottom
   align(left)[
-    #text(size: 12pt, weight: "bold")[Supervisors / Mentors:] \
-    #v(2mm)
+    #set text(size: 11pt)
+    #text(weight: "bold", fill: brand-color)[Supervisors / Mentors] \
+    #v(1mm)
     #for sup in supervisors [
-      - #sup \
+      #h(0.5em) #sup \
     ]
   ]
 
@@ -86,48 +100,37 @@
   // --- Main Document Page Setup ---
   set page(
     fill: none,
-    margin: (top: margin-v, bottom: margin-v, left: margin-side, right: margin-side),
+    margin: (top: 3.5cm, bottom: 3.5cm, left: margin-side, right: margin-side),
     header: context {
-      set text(size: 10pt, fill: white, font: font-sans, weight: "medium")
-      place(dx: -margin-side, dy: 0cm, block(
-        fill: brand-color,
-        width: page-width,
-        height: margin-v,
-        inset: (left: margin-side, right: margin-side, bottom: 5mm),
-        align(bottom)[
-          #grid(
-            columns: (1fr, auto),
-            align(left + horizon, title),
-            align(right + horizon)[
-              #if company_logo != none { image(company_logo, height: 0.8cm) } else { text(company_name) }
-            ],
-          )
+      set text(size: 9pt, fill: rgb("#666666"), font: font-sans, weight: "medium")
+      grid(
+        columns: (1fr, auto),
+        align(left + bottom, title),
+        align(right + bottom)[
+          #if company_logo != none { image(company_logo, height: 1cm) } else { text(company_name) }
         ],
-      ))
+      )
+      v(0.5cm)
+      line(length: 100%, stroke: 0.5pt + rgb("#e0e0e0"))
     },
     footer: context {
-      set text(size: 12pt, fill: white, font: font-sans, weight: "medium")
-      place(dx: -margin-side, dy: 0cm, block(
-        fill: brand-color,
-        width: page-width,
-        height: margin-v,
-        inset: (left: margin-side, right: margin-side, top: 5mm),
-        align(top)[
-          #grid(
-            columns: (auto, 1fr, auto),
-            align(left + horizon)[
-              #if university_logo != none { image(university_logo, height: 0.8cm) } else { text(university_name) }
-            ],
-            align(right + horizon)[Page #counter(page).display("1")],
-          )
+      set text(size: 9pt, fill: rgb("#666666"), font: font-sans, weight: "medium")
+      line(length: 100%, stroke: 0.5pt + rgb("#e0e0e0"))
+      v(0.5cm)
+      grid(
+        columns: (auto, 1fr, auto),
+        align(left + top)[
+          #if university_logo != none { image(university_logo, height: 1cm) } else { text(university_name) }
         ],
-      ))
+        align(center + top)[ #author ],
+        align(right + top)[Page #counter(page).display("1 / 1", both: true)],
+      )
     },
   )
 
   // --- Main Typography & Styling ---
-  set text(font: font-serif, size: 11pt, lang: "en", fill: black)
-  set par(justify: true, leading: 0.35em, first-line-indent: 1.5em)
+  set text(font: font-serif, size: 12pt, lang: "en", fill: black)
+  set par(justify: true, leading: 0.65em, first-line-indent: 0pt, spacing: 1.2em)
   set heading(numbering: "1.1.")
 
   show heading: it => {
@@ -154,14 +157,7 @@
 
   show terms: set text(font: font-sans, size: 10pt)
 
-  show outline.entry: it => link(
-    it.element.location(),
-    it.indented(it.prefix(), {
-      it.body()
-      h(1fr)
-      it.page()
-    }),
-  )
+  show outline: set text(font: font-sans)
 
   show figure.caption: set text(size: 9pt, style: "italic", fill: rgb("#555555"))
 
