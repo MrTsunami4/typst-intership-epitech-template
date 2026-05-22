@@ -73,7 +73,7 @@
           #if company_logo != none { image(company_logo, width: 4cm) } else { text(weight: "bold", company_name) }
         ],
       )
-      #v(1.5cm)
+      #v(5cm)
       #align(center)[#text(size: 36pt, weight: "bold", title)]
     ],
 
