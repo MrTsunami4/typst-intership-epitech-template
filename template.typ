@@ -1,6 +1,8 @@
 #let part_page(title, preamble: none) = {
   page(
     margin: 2.5cm,
+    header: none,
+    footer: none,
   )[
     #set text(font: "DejaVu Sans")
     #v(1fr)
@@ -25,6 +27,7 @@
   company_logo: none,
   university_name: "Epitech",
   university_logo: none,
+  footer_university_logo: none,
   supervisors: (),
   dates: "",
   abstract: none,
@@ -46,7 +49,7 @@
 
   // --- Title Page Setup ---
   set page(paper: "a4", margin: (top: 3cm, bottom: 3cm, left: margin-side, right: margin-side), fill: none)
-  
+
   // Background styling for a "bolder" look
   place(top + left, block(fill: brand-color, width: 100%, height: 40%, outset: (x: margin-side, y: 3cm)))
 
@@ -65,7 +68,7 @@
   )
 
   v(1.5cm)
-  
+
   // Title on the blue background
   align(center)[
     #text(size: 36pt, weight: "bold", title)
@@ -105,8 +108,8 @@
       set text(size: 9pt, fill: rgb("#666666"), font: font-sans, weight: "medium")
       grid(
         columns: (1fr, auto),
-        align(left + bottom, title),
-        align(right + bottom)[
+        align(left + horizon, title),
+        align(right + horizon)[
           #if company_logo != none { image(company_logo, height: 1cm) } else { text(company_name) }
         ],
       )
@@ -119,11 +122,12 @@
       v(0.5cm)
       grid(
         columns: (auto, 1fr, auto),
-        align(left + top)[
-          #if university_logo != none { image(university_logo, height: 1cm) } else { text(university_name) }
+        align(left + horizon)[
+          #let footer-logo = if footer_university_logo != none { footer_university_logo } else { university_logo }
+          #if footer-logo != none { image(footer-logo, height: 1cm) } else { text(university_name) }
         ],
-        align(center + top)[ #author ],
-        align(right + top)[Page #counter(page).display("1 / 1", both: true)],
+        align(center + horizon)[ #author ],
+        align(right + horizon)[Page #counter(page).display("1 / 1", both: true)],
       )
     },
   )
