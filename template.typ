@@ -48,55 +48,57 @@
   set document(title: title, author: author)
 
   // --- Title Page Setup ---
-  set page(paper: "a4", margin: (top: 3cm, bottom: 3cm, left: margin-side, right: margin-side), fill: none)
-
-  // Background styling for a "bolder" look
-  place(top + left, block(fill: brand-color, width: 100%, height: 40%, outset: (x: margin-side, y: 3cm)))
+  set page(paper: "a4", margin: 0pt, fill: none)
 
   set text(font: font-sans, weight: "medium")
 
-  // Logos at the top (on blue background)
-  set text(fill: white)
+  // Bi-color cover page using grid
   grid(
-    columns: (1fr, 1fr),
-    align(left)[
-      #if university_logo != none { image(university_logo, width: 4cm) } else { text(weight: "bold", university_name) }
+    columns: 1fr,
+    rows: (1fr, 1fr),
+    fill: (x, y) => if y == 0 { brand-color } else { none },
+    align: center + horizon,
+
+    // Top cell (blue background)
+    grid.cell(inset: (left: margin-side, right: margin-side, top: 3cm, bottom: 1.5cm))[
+      #set text(fill: white)
+      #grid(
+        columns: (1fr, 1fr),
+        align(left)[
+          #if university_logo != none { image(university_logo, width: 4cm) } else {
+            text(weight: "bold", university_name)
+          }
+        ],
+        align(right)[
+          #if company_logo != none { image(company_logo, width: 4cm) } else { text(weight: "bold", company_name) }
+        ],
+      )
+      #v(1.5cm)
+      #align(center)[#text(size: 36pt, weight: "bold", title)]
     ],
-    align(right)[
-      #if company_logo != none { image(company_logo, width: 4cm) } else { text(weight: "bold", company_name) }
+
+    // Bottom cell (white background)
+    grid.cell(inset: (left: margin-side, right: margin-side, bottom: 3cm, top: 0pt))[
+      #set text(fill: black)
+      #v(2cm)
+      #align(center)[
+        #text(size: 24pt, weight: "semibold", author)
+        #v(0.2cm)
+        #text(size: 16pt, email)
+        #v(0.2cm)
+        #text(size: 14pt, style: "italic", fill: rgb("#444444"), dates)
+      ]
+      #v(1fr)
+      #align(left)[
+        #set text(size: 11pt)
+        #text(weight: "bold", fill: brand-color)[Supervisors / Mentors] \
+        #v(1mm)
+        #for sup in supervisors [
+          #h(0.5em) #sup \
+        ]
+      ]
     ],
   )
-
-  v(1.5cm)
-
-  // Title on the blue background
-  align(center)[
-    #text(size: 36pt, weight: "bold", title)
-  ]
-
-  v(4.5cm)
-
-  // Author and Details (on white background)
-  set text(fill: black)
-  align(center)[
-    #text(size: 24pt, weight: "semibold", author)
-    #v(0.2cm)
-    #text(size: 16pt, email)
-    #v(0.8cm)
-    #text(size: 14pt, style: "italic", fill: rgb("#444444"), dates)
-  ]
-
-  v(1fr)
-
-  // Supervisors block pushed to the bottom
-  align(left)[
-    #set text(size: 11pt)
-    #text(weight: "bold", fill: brand-color)[Supervisors / Mentors] \
-    #v(1mm)
-    #for sup in supervisors [
-      #h(0.5em) #sup \
-    ]
-  ]
 
   pagebreak()
 
